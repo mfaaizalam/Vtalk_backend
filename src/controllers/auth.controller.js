@@ -85,11 +85,12 @@ export async function login(req, res) {
     });
 
     res.cookie("jwt", token, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      httpOnly: true, // prevent XSS attacks,
-      sameSite: "strict", // prevent CSRF attacks
-      secure: process.env.NODE_ENV === "production",
-    });
+  maxAge: 7 * 24 * 60 * 60 * 1000,
+  httpOnly: true,
+  sameSite: "lax", // localhost me strict kabhi kabhi problem deta hai
+  secure: false,   // local dev ke liye
+});
+
 
     res.status(200).json({ success: true, user });
   } catch (error) {
