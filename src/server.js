@@ -82,6 +82,16 @@ app.use("/api/chat", chatRoutes);
 app.use("/chat", chatRoutes);
 app.use("/chat", aichat);
 
+
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+  });
+}
+
 let isConnected = false;
 
 async function connectToMongoDB() {
